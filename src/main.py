@@ -14,6 +14,8 @@ import similar_style
 # Imports the Google Cloud client library
 from google.cloud import vision
 
+from src.getAttributes import getAttributesWithProductIds
+
 image_path = 'resources/img_1.png'
 product_list = []
 
@@ -177,6 +179,13 @@ def read_data():
         print(img_url)
         find_object.extract_labels(img_url)
 
+
+import json
+
+def deserialisation(data):
+    return json.loads(data)
+
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print_hi('PyCharm')
@@ -192,6 +201,10 @@ if __name__ == '__main__':
     # similar_style.get_similar_style("img_1.png")
     # similar_style.get_similar_2("")
     # similar_style.postman()
-    similar_style.postman_http()
+    res = similar_style.postman_http('/Users/saumyamishra/myntra-hackerRamp/resources/myntra-trousers.png')
+    print(res)
+    product_list = deserialisation(res)["response"]["styleIds"]
+    print(product_list)
+    getAttributesWithProductIds(product_list)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
